@@ -1,0 +1,21 @@
+{
+    "name": "ams/ams",
+    "description": "AMS",
+    "type": "library",
+    "keywords": ["AMS"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "perpel",
+            "email": "572821520@qq.com"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "kordar\\ams\\": ""
+        }
+    }
+}
