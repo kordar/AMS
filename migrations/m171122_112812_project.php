@@ -14,7 +14,7 @@ class m171122_112812_project extends Migration
             'projectID' => 'int(11) unsigned NOT NULL AUTO_INCREMENT',
             'projectType' => 'tinyint(1) unsigned NOT NULL',
             'projectName' => 'varchar(30) NOT NULL',
-            'projectUpdateTime' => 'timestamp NOT NULL DEFAULT \'CURRENT_TIMESTAMP\'',
+            'projectUpdateTime' => 'timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP',
             'projectVersion' => 'varchar(6) NOT NULL DEFAULT \'1.0\'',
             'PRIMARY KEY (`projectID`)'
         ], "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin");

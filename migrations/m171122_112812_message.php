@@ -14,7 +14,7 @@ class m171122_112812_message extends Migration
             'msgID' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
             'toUserID' => 'int(10) unsigned NOT NULL',
             'fromUserID' => 'int(10) unsigned NOT NULL',
-            'msgSendTime' => 'timestamp NOT NULL DEFAULT \'CURRENT_TIMESTAMP\'',
+            'msgSendTime' => 'timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP',
             'msgType' => 'tinyint(1) unsigned NOT NULL DEFAULT \'0\'',
             'summary' => 'varchar(255) NULL',
             'msg' => 'text NOT NULL',

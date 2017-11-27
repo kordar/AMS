@@ -21,7 +21,7 @@ class m171122_112812_api extends Migration
             'apiSuccessMockType' => 'tinyint(1) unsigned NOT NULL DEFAULT \'0\'',
             'apiFailureMockType' => 'tinyint(1) unsigned NOT NULL DEFAULT \'0\'',
             'apiStatus' => 'tinyint(1) unsigned NOT NULL DEFAULT \'0\'',
-            'apiUpdateTime' => 'timestamp NOT NULL DEFAULT \'CURRENT_TIMESTAMP\'',
+            'apiUpdateTime' => 'timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP',
             'groupID' => 'int(11) unsigned NOT NULL',
             'projectID' => 'int(11) unsigned NOT NULL',
             'starred' => 'tinyint(1) unsigned NOT NULL DEFAULT \'0\'',

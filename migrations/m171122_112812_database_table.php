@@ -15,7 +15,7 @@ class m171122_112812_database_table extends Migration
             'tableID' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
             'tableName' => 'varchar(255) NOT NULL',
             'tableDescription' => 'varchar(255) NULL',
-            'PRIMARY KEY (`dbID`,`tableID`)'
+            'PRIMARY KEY (`tableID`, `dbID`)'
         ], "ENGINE=InnoDB DEFAULT CHARSET=utf8");
         
         /* 索引设置 */

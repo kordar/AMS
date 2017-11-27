@@ -15,7 +15,7 @@ class m171122_112812_api_test_history extends Migration
             'apiID' => 'int(10) unsigned NOT NULL',
             'requestInfo' => 'longtext NULL',
             'resultInfo' => 'longtext NULL',
-            'testTime' => 'timestamp NOT NULL DEFAULT \'CURRENT_TIMESTAMP\'',
+            'testTime' => 'timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP',
             'projectID' => 'int(10) unsigned NOT NULL',
             'PRIMARY KEY (`testID`)'
         ], "ENGINE=InnoDB DEFAULT CHARSET=utf8");

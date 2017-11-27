@@ -14,7 +14,7 @@ class m171122_112812_database extends Migration
             'dbID' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
             'dbName' => 'varchar(255) NOT NULL',
             'dbVersion' => 'float unsigned NOT NULL',
-            'dbUpdateTime' => 'timestamp NOT NULL DEFAULT \'CURRENT_TIMESTAMP\'',
+            'dbUpdateTime' => 'timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP',
             'PRIMARY KEY (`dbID`)'
         ], "ENGINE=InnoDB DEFAULT CHARSET=utf8");
         

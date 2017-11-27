@@ -15,7 +15,7 @@ class m171122_112812_api_env_front_uri extends Migration
             'uri' => 'varchar(255) NOT NULL',
             'uriID' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
             'applyProtocol' => 'varchar(4) NOT NULL DEFAULT \'-1\'',
-            'PRIMARY KEY (`envID`,`uriID`)'
+            'PRIMARY KEY (`uriID`, `envID`)'
         ], "ENGINE=InnoDB DEFAULT CHARSET=utf8");
         
         /* 索引设置 */
