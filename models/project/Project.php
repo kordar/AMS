@@ -2,6 +2,8 @@
 
 namespace kordar\ams\models\project;
 
+use kordar\ams\models\api\group\ApiGroup;
+use kordar\ams\models\api\group\GroupEvent;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 
@@ -16,6 +18,7 @@ use yii\behaviors\TimestampBehavior;
  */
 class Project extends \yii\db\ActiveRecord
 {
+    const EVENT_INIT_GROP = 'init_group';
     /**
      * @inheritdoc
      */
@@ -35,7 +38,7 @@ class Project extends \yii\db\ActiveRecord
                 'createdAtAttribute' => 'projectUpdateTime',
                 'updatedAtAttribute' => 'projectUpdateTime',
                 'value' => date('Y-m-d H:i:s')
-            ]
+            ],
         ];
     }
 
@@ -77,10 +80,17 @@ class Project extends \yii\db\ActiveRecord
             $transaction = $db->beginTransaction();  //开启事务
             $bolean = $this->insert($runValidation, $attributeNames);
             if ($bolean) {
+                // 设置默认 group 信息
+                $groupModel = new ApiGroup();
+                $this->on(self::EVENT_INIT_GROP, [$groupModel, 'setDefaultGroup']);
+
                 $model = new ConnProject();
                 $model->projectID = $this->projectID;
                 $model->userID = \Yii::$app->params['userInfo']['id'];
                 if ($model->save()) {
+                    $event = new GroupEvent();
+                    $event->projectID = $this->projectID;
+                    $this->trigger('init_group', $event);
                     $transaction->commit();
                     return true;
                 }

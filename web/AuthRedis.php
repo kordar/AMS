@@ -44,6 +44,7 @@ class AuthRedis
         $redis = \Yii::$app->redis;
 
         if ($redis->exists($redisKey)) {
+            $redis->expire($redisKey, 3600);
             return $redis->hmget($redisKey, 'id', 'username', 'email', 'auth_token', 'status', 'created_at', 'updated_at');
         }
 

@@ -15,7 +15,7 @@ class LoginForm extends Model
 {
     public $username;
     public $password;
-    public $duration = 15;
+    public $duration = 3600;
     public $type = 'PC';
 
     private $_user = false;
