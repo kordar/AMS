@@ -5,6 +5,7 @@ namespace kordar\ams\models\project;
 use kordar\ams\models\api\group\ApiGroup;
 use kordar\ams\models\api\group\GroupEvent;
 use Yii;
+use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 
 /**
@@ -43,6 +44,12 @@ class Project extends \yii\db\ActiveRecord
                 'updatedAtAttribute' => 'projectUpdateTime',
                 'value' => date('Y-m-d H:i:s')
             ],
+            [
+                'class' => BlameableBehavior::className(),
+                'createdByAttribute' => 'created_user',
+                'updatedByAttribute' => null,
+                'value' => Yii::$app->params['userInfo']['id']
+            ]
         ];
     }
 

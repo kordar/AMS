@@ -25,6 +25,7 @@ class m171122_112812_user extends Migration
             'auth_token' => $this->string()->unique(),
             'email' => $this->string()->notNull()->unique(),
             'status' => $this->smallInteger()->notNull()->defaultValue(10),
+            'type' => $this->smallInteger()->notNull()->defaultValue(0)->comment('0普通，9超级管理员'),
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer()->notNull(),
         ], $tableOptions);

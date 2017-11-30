@@ -9,10 +9,10 @@ class ProjectController extends CommonController
     {
         $actions = parent::actions();
         $actions['index']['class'] = 'kordar\ams\actions\IndexAction';
-        $actions['index']['filterParams'] = ['projectName' => 'CCCCCC'];
+        $actions['index']['filterParams'] = ['status' => 1];
         $actions['recycle'] = [
             'class' => 'kordar\ams\actions\IndexAction',
-            'filterParams' => ['projectName' => 'MMMMMM'],
+            'filterParams' => ['status' => 0],
             'modelClass' => $this->modelClass,
             'checkAccess' => [$this, 'checkAccess'],
         ];
