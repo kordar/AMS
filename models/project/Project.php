@@ -19,6 +19,10 @@ use yii\behaviors\TimestampBehavior;
 class Project extends \yii\db\ActiveRecord
 {
     const EVENT_INIT_GROP = 'init_group';
+
+    const STATUS_ACTIVE = 1;
+    const STATUS_DELETED = 0;
+
     /**
      * @inheritdoc
      */
@@ -56,6 +60,9 @@ class Project extends \yii\db\ActiveRecord
             [['projectName'], 'string', 'length' => [1, 32]],
 
             [['projectVersion'], 'number'],
+
+            ['status', 'default', 'value' => self::STATUS_ACTIVE],
+            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
         ];
     }
 
@@ -65,11 +72,11 @@ class Project extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'projectID' => 'Project ID',
-            'projectType' => 'Project Type',
-            'projectName' => 'Project Name',
-            'projectUpdateTime' => 'Project Update Time',
-            'projectVersion' => 'Project Version',
+            'projectID' => 'ID',
+            'projectType' => '类型',
+            'projectName' => '名称',
+            'projectUpdateTime' => '更新时间',
+            'projectVersion' => '版本',
         ];
     }
 

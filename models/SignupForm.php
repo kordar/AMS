@@ -1,6 +1,7 @@
 <?php
 namespace kordar\ams\models;
 
+use kordar\ams\web\AmsException;
 use yii\base\Model;
 
 /**
@@ -54,4 +55,14 @@ class SignupForm extends Model
         
         return $user->save() ? $user : null;
     }
+
+    public function attributeLabels()
+    {
+        return [
+            'username' => '用户名',
+            'email' => '邮箱',
+            'password' => '密码',
+        ];
+    }
+
 }

@@ -1,10 +1,11 @@
 <?php
 namespace kordar\ams\controllers;
 
+use Yii;
 use kordar\ams\web\AmsException;
 use kordar\ams\web\AuthRedis;
 use yii\rest\ActiveController;
-use yii\rest\IndexAction;
+
 
 class CommonController extends ActiveController
 {
@@ -40,10 +41,12 @@ class CommonController extends ActiveController
     }
 
 
+    protected $userInfo = [];
+
     public function init()
     {
-        $this->request = \Yii::$app->request;
-        $token = $this->request->get('auth_token');
+        $this->request = Yii::$app->request;
+        $token = $this->request->get('auth_token', '');
         if (empty($token)) {
             throw new AmsException(50001);
         }
@@ -51,7 +54,8 @@ class CommonController extends ActiveController
         $userRedis = new AuthRedis();
         $keys = ['id', 'username', 'email', 'auth_token', 'status', 'created_at', 'updated_at'];
         $values = $userRedis->getUserInfo($token);
-        \Yii::$app->params['userInfo'] = array_combine($keys, $values);
+        $this->userInfo = array_combine($keys, $values);
+        Yii::$app->params['userInfo'] = $this->userInfo;
     }
 
 }
