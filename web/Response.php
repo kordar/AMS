@@ -48,7 +48,7 @@ class Response
         if (isset($data['code'])) {
             switch ($data['code']) {
                 case 0:
-                    $data = ['code' => Response::$failedStatus, 'msg' => $data['message']];
+                    $data = ['code' => Response::$failedStatus, 'msg' => $data['message'], 'desc' => $data['desc']];
                     break;
             }
             Yii::$app->response->data = $data;

@@ -38,7 +38,7 @@ class AuthController extends CommonController
             'signup' => ['POST'],
             'logout' => ['POST'],
             'request-password-reset' => ['POST'],
-            'reset-password' => ['POST'],
+            'reset-password' => ['GET'],
         ];
     }
 
@@ -110,7 +110,7 @@ class AuthController extends CommonController
             throw new BadRequestHttpException($e->getMessage());
         }
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()) {
+        if ($model->load(Yii::$app->request->post(), '') && $model->validate() && $model->resetPassword()) {
             return Response::sendCustomer(Response::$successStatus, '新的密码已被存储.');
         }
 

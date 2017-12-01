@@ -108,11 +108,8 @@ class RbacController extends CommonController
                 $child = $auth->getPermission($item);
                 $auth->addChild($parent, $child);
             }
-
             return Response::sendCustomer(Response::$successStatus, '赋权完成');
-
         } catch (Exception $e) {}
-
         return Response::sendCustomer(Response::$failedStatus, '赋权失败!');
     }
 

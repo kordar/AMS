@@ -9,8 +9,8 @@ class ErrorAction extends \yii\web\ErrorAction
         Yii::$app->getResponse()->setStatusCodeByException($this->exception);
         return [
             'code'=>$this->exception->getCode(),
-            'msg'=>$this->getExceptionName(),
-            'desc'=>$this->getExceptionMessage()
+            'desc'=>$this->getExceptionMessage(),
+            'message'=>$this->getExceptionName()
         ];
     }
 }

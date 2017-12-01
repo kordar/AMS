@@ -3,7 +3,7 @@
 /* @var $this yii\web\View */
 /* @var $user kordar\ams\models\User */
 
-$resetLink = Yii::$app->urlManager->createAbsoluteUrl(['/ace/auth/reset-password', 'token' => $user->password_reset_token]);
+$resetLink = Yii::$app->urlManager->createAbsoluteUrl(['/ams/auth/reset-password', 'token' => $user->password_reset_token]);
 ?>
 Hello <?= $user->username ?>,
 
