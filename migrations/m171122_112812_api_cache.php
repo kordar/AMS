@@ -17,6 +17,7 @@ class m171122_112812_api_cache extends Migration
             'apiID' => 'int(10) unsigned NOT NULL',
             'apiJson' => 'longtext NOT NULL',
             'starred' => 'tinyint(3) unsigned NOT NULL DEFAULT \'0\'',
+            'createUserID' => 'int(11) NOT NULL DEFAULT \'0\'',
             'updateUserID' => 'int(11) NOT NULL DEFAULT \'0\'',
             'PRIMARY KEY (`cacheID`)'
         ], "ENGINE=InnoDB DEFAULT CHARSET=utf8");

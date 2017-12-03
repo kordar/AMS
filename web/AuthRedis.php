@@ -45,7 +45,7 @@ class AuthRedis
 
         if ($redis->exists($redisKey)) {
             $redis->expire($redisKey, 3600);
-            return $redis->hmget($redisKey, 'id', 'username', 'email', 'auth_token', 'status', 'created_at', 'updated_at');
+            return $redis->hmget($redisKey, 'userID', 'userName', 'userNickName', 'email', 'auth_token', 'status', 'created_at', 'updated_at');
         }
 
         throw new AmsException(50002);

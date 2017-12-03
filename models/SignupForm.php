@@ -12,6 +12,7 @@ class SignupForm extends Model
     public $username;
     public $email;
     public $password;
+    public $nickname;
 
 
     /**
@@ -23,7 +24,7 @@ class SignupForm extends Model
             ['username', 'trim'],
             ['username', 'required'],
             ['username', 'unique', 'targetClass' => '\kordar\ams\models\User', 'message' => '该用户名已被占用'],
-            ['username', 'string', 'min' => 2, 'max' => 255],
+            [['username', 'nickname'], 'string', 'min' => 2, 'max' => 255],
 
             ['email', 'trim'],
             ['email', 'required'],
@@ -48,7 +49,8 @@ class SignupForm extends Model
         }
         
         $user = new User();
-        $user->username = $this->username;
+        $user->userName = $this->username;
+        $user->userNickName = $this->nickname;
         $user->email = $this->email;
         $user->setPassword($this->password);
         $user->generateAuthKey();
@@ -60,6 +62,7 @@ class SignupForm extends Model
     {
         return [
             'username' => '用户名',
+            'nickname' => '用户昵称',
             'email' => '邮箱',
             'password' => '密码',
         ];

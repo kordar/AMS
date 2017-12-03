@@ -1,14 +1,37 @@
 <?php
 namespace kordar\ams\controllers;
 
-use yii\rest\ActiveController;
+use kordar\ams\web\Response;
+use Yii;
+use kordar\ams\models\api\Api;
 
-class ApiController extends ActiveController
+class ApiController extends CommonController
 {
-    public $modelClass = 'kordar\ams\models\User';
+    public $modelClass = 'kordar\ams\models\api\Api';
 
-    public function checkAccess($action, $model = null, $params = [])
+    public function actions()
     {
-        // throw new \yii\web\ForbiddenHttpException(sprintf('You can only %s articles that you\'ve created.', $action), 1234);
+        $actions = parent::actions();
+        unset($actions['update']);
+        /*$actions['index']['class'] = 'kordar\ams\actions\IndexAction';
+        $actions['index']['filterParams'] = ['status' => 1];
+        $actions['recycle'] = [
+            'class' => 'kordar\ams\actions\IndexAction',
+            'filterParams' => ['status' => 0],
+            'modelClass' => $this->modelClass,
+            'checkAccess' => [$this, 'checkAccess'],
+        ];*/
+
+        return $actions;
     }
+
+    public function actionUpdate($id)
+    {
+        $model = Api::findOne(['apiID'=>$id]);
+        if ($model->load(Yii::$app->getRequest()->getBodyParams(), '') && $model->save()) {
+            return $model;
+        }
+        return Response::sendCustomer(Response::$failedStatus, '接口更新失败!');
+    }
+
 }

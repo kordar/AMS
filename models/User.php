@@ -10,8 +10,9 @@ use yii\web\IdentityInterface;
 /**
  * User model
  *
- * @property integer $id
- * @property string $username
+ * @property integer $userID
+ * @property string $userName
+ * @property string $userNickName
  * @property string $password_hash
  * @property string $password_reset_token
  * @property string $auth_token
@@ -62,7 +63,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findIdentity($id)
     {
-        return static::findOne(['id' => $id, 'status' => self::STATUS_ACTIVE]);
+        return static::findOne(['userID' => $id, 'status' => self::STATUS_ACTIVE]);
     }
 
     /**
@@ -81,7 +82,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findByUsername($username)
     {
-        return static::findOne(['username' => $username, 'status' => self::STATUS_ACTIVE]);
+        return static::findOne(['userName' => $username, 'status' => self::STATUS_ACTIVE]);
     }
 
     /**
@@ -204,8 +205,9 @@ class User extends ActiveRecord implements IdentityInterface
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'username' => '用户名',
+            'userID' => '用户ID',
+            'userName' => '用户名',
+            'userNickName' => '用户昵称',
             'auth_key' => 'Auth Key',
             'password_hash' => 'Password Hash',
             'password_reset_token' => 'Password Reset Token',

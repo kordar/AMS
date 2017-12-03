@@ -52,10 +52,15 @@ class CommonController extends ActiveController
         }
 
         $userRedis = new AuthRedis();
-        $keys = ['id', 'username', 'email', 'auth_token', 'status', 'created_at', 'updated_at'];
+        $keys = ['userID', 'userName', 'userNickName', 'email', 'auth_token', 'status', 'created_at', 'updated_at'];
         $values = $userRedis->getUserInfo($token);
         $this->userInfo = array_combine($keys, $values);
         Yii::$app->params['userInfo'] = $this->userInfo;
+    }
+
+    protected function findModel()
+    {
+        return Yii::createObject($this->modelClass);
     }
 
 }

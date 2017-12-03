@@ -32,6 +32,7 @@ class m171122_112812_api extends Migration
             'apiNote' => 'text NULL',
             'apiRequestParamType' => 'tinyint(3) unsigned NOT NULL DEFAULT \'0\'',
             'apiRequestRaw' => 'text NULL',
+            'createdUserID' => 'int(11) NOT NULL DEFAULT \'0\'',
             'updateUserID' => 'int(11) NOT NULL DEFAULT \'0\'',
             'PRIMARY KEY (`apiID`,`apiURI`,`groupID`)'
         ], "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin");

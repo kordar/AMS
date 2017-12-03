@@ -17,8 +17,9 @@ class m171122_112812_user extends Migration
 
         /* 表数据 */
         $this->createTable('{{%user}}', [
-            'id' => $this->primaryKey(),
-            'username' => $this->string()->notNull()->unique(),
+            'userID' => $this->primaryKey(),
+            'userName' => $this->string()->notNull()->unique(),
+            'userNickName' => $this->string(),
             'auth_key' => $this->string(32)->notNull(),
             'password_hash' => $this->string()->notNull(),
             'password_reset_token' => $this->string()->unique(),

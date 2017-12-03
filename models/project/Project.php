@@ -2,9 +2,9 @@
 
 namespace kordar\ams\models\project;
 
+use Yii;
 use kordar\ams\models\api\group\ApiGroup;
 use kordar\ams\models\api\group\GroupEvent;
-use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 
@@ -48,7 +48,7 @@ class Project extends \yii\db\ActiveRecord
                 'class' => BlameableBehavior::className(),
                 'createdByAttribute' => 'created_user',
                 'updatedByAttribute' => null,
-                'value' => Yii::$app->params['userInfo']['id']
+                'value' => Yii::$app->params['userInfo']['userID']
             ]
         ];
     }
@@ -100,11 +100,11 @@ class Project extends \yii\db\ActiveRecord
 
                 $model = new ConnProject();
                 $model->projectID = $this->projectID;
-                $model->userID = \Yii::$app->params['userInfo']['id'];
+                $model->userID = \Yii::$app->params['userInfo']['userID'];
                 if ($model->save()) {
                     $event = new GroupEvent();
                     $event->projectID = $this->projectID;
-                    $this->trigger('init_group', $event);
+                    $this->trigger(self::EVENT_INIT_GROP, $event);
                     $transaction->commit();
                     return true;
                 }
