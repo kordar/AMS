@@ -69,8 +69,4 @@ class ApiCache extends \yii\db\ActiveRecord
         ];
     }
 
-    public function setCacheApi($info = [])
-    {
-        return $this->load($info, '') && $this->save();
-    }
 }

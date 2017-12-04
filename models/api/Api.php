@@ -2,9 +2,11 @@
 
 namespace kordar\ams\models\api;
 
+use kordar\ams\models\api\group\ApiGroup;
 use kordar\ams\models\api\header\ApiHeader;
 use kordar\ams\models\api\request\ApiRequestParam;
 use kordar\ams\models\api\result\ApiResultParam;
+use kordar\ams\web\AmsException;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
@@ -102,7 +104,7 @@ class Api extends \yii\db\ActiveRecord
             [['apiName', 'apiURI', 'apiProtocol', 'apiRequestType', 'groupID', 'projectID'], 'required'],
             [['apiProtocol', 'apiRequestType', 'apiSuccessMockType', 'apiFailureMockType', 'apiStatus', 'groupID', 'projectID', 'starred', 'removed', 'apiNoteType', 'apiRequestParamType', 'createdUserID', 'updateUserID'], 'integer'],
             [['apiFailureMock', 'apiSuccessMock', 'apiNoteRaw', 'apiNote', 'apiRequestRaw'], 'string'],
-            [['apiUpdateTime', 'removeTime', 'apiHeader', 'apiRequestParams', 'apiResultParams'], 'safe'],
+            [['apiUpdateTime', 'removeTime', 'apiHeader', 'apiRequestParams', 'apiResultParams', 'projectID'], 'safe'],
             [['apiName', 'apiURI'], 'string', 'max' => 255],
         ];
     }
@@ -148,41 +150,49 @@ class Api extends \yii\db\ActiveRecord
     {
         if ($rs = parent::save()) {
 
-            // 设置 Header
-            $headerModel = new ApiHeader();
-            $headerModel->setApiHeader($this->apiID, $this->apiHeader);
+            if ($this->apiHeader) {
+                // 设置 Header
+                $headerModel = new ApiHeader();
+                $headerModel->setApiHeader($this->apiID, $this->apiHeader);
+            }
 
-            // 设置 Request Params
-            $requestModel = new ApiRequestParam();
-            $requestModel->setParams($this->apiID, $this->apiRequestParams);
+            if ($this->apiRequestParams) {
+                // 设置 Request Params
+                $requestModel = new ApiRequestParam();
+                $requestModel->setParams($this->apiID, $this->apiRequestParams);
+            }
 
-            // 设置 Result Params
-            $requestModel = new ApiResultParam();
-            $requestModel->setParams($this->apiID, $this->apiResultParams);
+            if ($this->apiResultParams) {
+                // 设置 Result Params
+                $requestModel = new ApiResultParam();
+                $requestModel->setParams($this->apiID, $this->apiResultParams);
+            }
 
             // 设置 Cache
-            $cacheModel = new ApiCache();
+            $cacheModel = ApiCache::findOne(['projectID'=>$this->projectID, 'groupID'=>$this->groupID, 'apiID'=>$this->apiID]);
+            if (empty($cacheModel)) {
+                $cacheModel = new ApiCache();
+            }
+
             $attributes = $this->attributes();
 
             $baseInfo = [];
             foreach ($attributes as $attribute) {
+
+                if (in_array($attribute, ['apiProtocol', 'apiRequestType', 'apiSuccessMockType', 'apiFailureMockType', 'apiStatus', 'groupID', 'projectID', 'starred', 'removed', 'apiNoteType', 'apiRequestParamType', 'createdUserID', 'updateUserID'])) {
+                    $baseInfo[$attribute] = intval($this->$attribute);
+                    continue;
+                }
+
                 $baseInfo[$attribute] = $this->$attribute;
             }
 
-            $cacheJson = json_encode([
-                    'baseInfo' => $baseInfo,
-                    'headerInfo' => $this->apiHeader,
-                    'requestInfo' => $this->apiRequestParams,
-                    'resultInfo' => $this->apiResultParams
-            ]);
-            $data = [
-                'projectID' => $this->projectID,
-                'groupID' => $this->groupID,
-                'apiID' => $this->apiID,
-                'starred' => $this->starred ? : 0,
-                'apiJson' => $cacheJson
-            ];
-            $cacheModel->setCacheApi($data);
+            $cacheModel->apiJson = json_encode(['baseInfo' => $baseInfo,'headerInfo' => $this->apiHeader,'requestInfo' => $this->apiRequestParams, 'resultInfo' => $this->apiResultParams]);
+            $cacheModel->projectID = $this->projectID;
+            $cacheModel->groupID = $this->groupID;
+            $cacheModel->apiID = $this->apiID;
+            $cacheModel->starred = $this->starred;
+            $cacheModel->save();
 
             return $rs;
         }

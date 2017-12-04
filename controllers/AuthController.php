@@ -38,7 +38,7 @@ class AuthController extends CommonController
             'signup' => ['POST'],
             'logout' => ['POST'],
             'request-password-reset' => ['POST'],
-            'reset-password' => ['GET'],
+            'reset-password' => ['POST'],
         ];
     }
 

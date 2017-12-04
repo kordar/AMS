@@ -70,7 +70,9 @@ class ApiRequestParam extends \yii\db\ActiveRecord
         foreach ($info as $val) {
 
            if (isset($val['paramID']) && !empty($val['paramID'])) {
-                $insertValueList = array_merge($val['paramValueList'], $insertValueList);
+               if (isset($val['paramValueList'])) {
+                   $insertValueList = array_merge($val['paramValueList'], $insertValueList);
+               }
             } else {
                 $val['paramID'] = 'null';
             }
@@ -98,6 +100,7 @@ class ApiRequestParam extends \yii\db\ActiveRecord
         }
 
         $sql = sprintf("INSERT INTO %s %s ON DUPLICATE KEY UPDATE %s", self::tableName(),'(`paramID`, `paramName`, `paramKey`, `paramValue`, `paramType`, `paramLimit`, `apiID`, `paramNotNull`) VALUES ' . implode(',', $insertList), implode(',', $updateList));
+
 
         return Yii::$app->db->createCommand($sql)->execute();
     }

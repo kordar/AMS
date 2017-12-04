@@ -32,8 +32,12 @@ class ApiGroup extends \yii\db\ActiveRecord
             [['groupName', 'projectID'], 'required'],
             [['projectID', 'parentGroupID', 'isChild'], 'integer'],
             [['groupName'], 'string', 'max' => 30],
+            [['isChild'], 'default', 'value' => function () {
+                return empty($this->parentGroupID) ? 0 : 1;
+            }]
         ];
     }
+
 
     /**
      * @inheritdoc

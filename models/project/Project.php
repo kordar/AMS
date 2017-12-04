@@ -46,8 +46,8 @@ class Project extends \yii\db\ActiveRecord
             ],
             [
                 'class' => BlameableBehavior::className(),
-                'createdByAttribute' => 'created_user',
-                'updatedByAttribute' => null,
+                'createdByAttribute' => 'createUserID',
+                'updatedByAttribute' => 'updateUserID',
                 'value' => Yii::$app->params['userInfo']['userID']
             ]
         ];
@@ -101,6 +101,7 @@ class Project extends \yii\db\ActiveRecord
                 $model = new ConnProject();
                 $model->projectID = $this->projectID;
                 $model->userID = \Yii::$app->params['userInfo']['userID'];
+
                 if ($model->save()) {
                     $event = new GroupEvent();
                     $event->projectID = $this->projectID;
