@@ -56,6 +56,7 @@ class CommonController extends ActiveController
         $values = $userRedis->getUserInfo($token);
         $this->userInfo = array_combine($keys, $values);
         Yii::$app->params['userInfo'] = $this->userInfo;
+
     }
 
     protected function findModel()
